@@ -1,0 +1,18 @@
+.tabla{
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  margin: 2rem auto;
+}
+.tabla th, td{
+  padding: 1rem 0;
+}
+.tabla th{
+  background-color: var(--primary-color);
+  color: var(--red-color);
+}
+.tabla td{
+  background-color: var(--secondary-color);
+  border-top: 3px solid var(--gray-color);
+  text-align: center;
+}

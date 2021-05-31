@@ -1,0 +1,31 @@
+.navbar{
+  min-height: calc(100vh - 2.65rem);
+  background-color: var(--primary-color);
+  min-width: 13rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all .3s ;
+  position: absolute;
+}
+.lista, .contacto{
+  list-style: none;
+  padding: 0;
+}
+
+.lista > li, .contacto > li{
+  font-weight: bold;
+  padding:.5rem 0 .5rem 2rem;
+  margin: .5rem 0;
+  color: var(--secondary-color);
+}
+.lista > li:hover{
+  color: var(--red-color);
+}
+
+.contacto > li{
+  font-weight: normal;
+}
+.none{
+  transform: translate(-13rem);
+}

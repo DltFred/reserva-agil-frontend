@@ -1,0 +1,14 @@
+.body{
+  background-image:  linear-gradient(to right, #615f7255, #68613a9c), 
+    url("./imagen1-mobile.jpg");
+  min-height: calc(100vh - 4rem);
+  background-size: cover;
+  
+}
+.title{
+  color: var(--secondary-color);
+  text-align: center;
+  line-height: 3rem;
+  text-decoration: underline;
+}
+

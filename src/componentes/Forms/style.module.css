@@ -1,0 +1,32 @@
+.form{
+  background-color: var(--gray-color);
+  margin: 0 2rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  margin: 0 auto;
+  max-width: 30rem;
+}
+.label{
+  display: block;
+  margin-bottom: .7rem;
+}
+.input{
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  border: none;
+  padding: .2rem .5rem;
+  outline: 0;
+  line-height: 1.5rem;
+  margin-top: .3rem;
+}
+.submit{
+  border: none;
+  outline: none;
+  padding: .5rem 1.5rem;
+  font-size: 1.25rem;
+  display: block;
+  margin: auto;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}

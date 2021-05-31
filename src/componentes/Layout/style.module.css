@@ -1,0 +1,17 @@
+.layout{
+  background-color: var(--primary-color);
+  min-height: 100vh;
+}
+.menu{
+  width: 2.5rem;
+  padding: .5rem;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+.tittle{
+  text-align: center;
+  margin: 0;
+  color: var(--red-color);
+}
