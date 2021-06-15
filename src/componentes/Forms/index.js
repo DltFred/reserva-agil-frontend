@@ -1,82 +1,83 @@
-import { useEffect, useState } from "react"
+import { useContext, useState } from 'react'
+import FormContext from '../../context/FormContext'
+import { createEmpleado, createReserva } from '../../services/fetchAPI'
 import Tabla from "../Tabla"
-import { createReserva, getMesa, getReserva } from './../../utils/fetchAPI'
 import style from './style.module.css'
 
-const Forms = ({data=[]}) => {
-  console.log(data);
-  const [reservas, setReservas] = useState([{"nro":1, nombre:"Juan Arcos", cantidad:"4",hora:"4"}])
-  const [mesas, setMesas] = useState([])
-  useEffect(() => {
-    getMesa().then(x => setMesas(x))
-    getReserva().then(x=> setReservas(x))
-  }, [])
-  
-  const pintarCliente = (reserva) => {
-    console.log(reserva);
-    setReservas([...reservas, reserva])
-  }
+const Forms = ({ data = [] }) => {
+  console.log(data)
+  const sedes = [{ id: 1, sede: "sede Marsano" }, { id: 2, sede: "sede San Borja" }, { id: 3, sede: "sede Miraflores" }, { id: 4, sede: "sede Caminos del inca" }]
+  const rol = [{ id: 1, rol: "Mesas" }, { id: 2, rol: "Cocina" }]
+  const [reserva, setReserva] = useState(false)
+  const { typeForm } = useContext(FormContext)
+  //sacar a un archivo
   const handleSubmit = (e) => {
     e.preventDefault()
-    const { mesa, cliente, cantidad, hora } = e.target
-    console.log(mesa);
-    const data2 = {
-      id_mesa: mesa.value,
-      id_estado: 1,
-      fechafin_reserva: hora.value,
-      fechainicio_reserva: hora.value
-    }
-    const pintar = {
-      nro: mesa.value,
-      nombre: cliente.value,
-      cantidad: cantidad.value,
-      hora: hora.value
-    }
-    const respuesta = createReserva(data2)
-    mesa.value = ''
-    cliente.value = ''
-    cantidad.value = ''
-    hora.value = ''
-    
-    respuesta.then(x => {
-      if (x === 'succes') {
-        pintarCliente(pintar)
+    if (typeForm === "reserva") {
+      const { sede, nombre, apellido, cantidad, fecha, telefono } = e.target
+      const newReserva = {
+        "nombre": nombre.value,
+        "apellido": apellido.value,
+        "fecha": fecha.value,
+        "telefono": telefono.value,
+        "cantPersonas": cantidad.value,
+        "sede": sede.value,
       }
-    })
+      const respuesta = createReserva(newReserva)
+
+      respuesta.then(x => {
+        setReserva(!reserva)
+        console.log(x)
+      })
+    }
+    if (typeForm === "personal") {
+      const { sede, nombre, apellido, telefono, correo, rol } = e.target
+      const newEmpleado = {
+        "nombre": nombre.value,
+        "apellido": apellido.value,
+        "email": correo.value,
+        "telefono": telefono.value,
+        "rol": rol.value,
+        "sede": sede.value,
+      }
+      const respuesta = createEmpleado(newEmpleado)
+
+      respuesta.then(x => {
+        setReserva(!reserva)
+        console.log(x)
+      })
+    }
+
   }
 
-  const renderInputs = (type, name)=>{
-    if(type==="combo"){
+  const renderInputs = (type, name) => {
+    if (type === "combo") {
       return <select name={name} className={style.input} >
-        {mesas.map(e=><option key={e.id_mesa}>{e.id_mesa}</option>)}
+        {(name === "sede") ? sedes.map(e => <option key={e.id}>{e.sede}</option>) : rol.map(e => <option key={e.id}>{e.rol}</option>)}
       </select>
-    }else{
+    } else {
       return <input type={`${type}`} name={name} className={style.input} />
     }
   }
-  
+
   return (
     <>
       <form className={style.form} onSubmit={handleSubmit}>
-      {
-        data.map(input=>(
-          <label key={input.label} className={style.label}>
-            {input.label}
-            {
-              renderInputs(input.type, input.name)
-            }
-            
-          </label>
-        ))
-      }
-      <button className={style.submit}>Registrar</button>
-    </form>
-    {
-      data.length === 4
-          ? <Tabla data={reservas} />
-          : console.log(data)
-    }
-</>
+        {
+          data.map(input => (
+            <label key={input.label} className={style.label}>
+              {input.label}
+              {
+                renderInputs(input.type, input.name)
+              }
+
+            </label>
+          ))
+        }
+        <button className={style.submit}>Registrar</button>
+      </form>
+      <Tabla addReservas={reserva} />
+    </>
   )
 }
 export default Forms
